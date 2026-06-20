@@ -309,12 +309,6 @@ This project is licensed under the **MIT License** — feel free to use, modify,
 
 ---
 
-<div align="center">
-
-**Made with ❤️ by the UIForge team**
-
-<br>
-
 <sub>[Report Bug](https://github.com/your-username/uiforge/issues) · [Request Feature](https://github.com/your-username/uiforge/issues) · [178.104.142.87:3004](http://178.104.142.87:3004)</sub>
 
 </div>
