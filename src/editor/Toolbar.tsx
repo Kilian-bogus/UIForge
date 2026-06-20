@@ -4,14 +4,20 @@ import { useUIStore } from '@/store/uiStore'
 import { useProjectStore } from '@/store/projectStore'
 import * as Icons from 'lucide-react'
 
-export function Toolbar() {
+interface ToolbarProps {
+  onNavigate?: (page: string) => void
+}
+
+export function Toolbar({ onNavigate }: ToolbarProps) {
   const { undo, redo, canUndo, canRedo, viewMode, setViewMode, zoom, setZoom, copySelected, pasteClipboard, clipboard, selectedNodeId, duplicateComponent } = useEditorStore()
   const { toggleSidebar, toggleRightPanel, sidebarOpen, rightPanelOpen, setExportDialog, setSettingsDialog, addToast } = useUIStore()
   const { getCurrentProject } = useProjectStore()
   const project = getCurrentProject()
 
   const handleSave = () => {
-    addToast('Projekt gespeichert (lokal)', 'success')
+    useEditorStore.getState().saveToStorage()
+    useProjectStore.getState().saveToStorage()
+    addToast('Projekt gespeichert ✓', 'success')
   }
 
   const handleExport = () => {
@@ -31,6 +37,9 @@ export function Toolbar() {
       flexShrink: 0,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+        {onNavigate && (
+          <ToolbarButton onClick={() => onNavigate('dashboard')} title="Zurück zum Dashboard" icon={<Icons.ArrowLeft size={16} />} />
+        )}
         <button onClick={toggleSidebar} style={toolBtn(sidebarOpen)} title="Palette ein/aus">
           <Icons.PanelLeft size={16} />
         </button>

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useEditorStore } from '@/store/editorStore'
 import { useUIStore } from '@/store/uiStore'
 import { exportProject, type ExportFormat } from '@/export'
-import { cn } from '@/lib/cn'
 
 export function ExportDialog() {
   const { nodes, rootIds } = useEditorStore()

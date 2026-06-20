@@ -8,7 +8,11 @@ import { SettingsPage } from './SettingsPage'
 import { useUIStore } from '@/store/uiStore'
 import { useProjectStore } from '@/store/projectStore'
 
-export function EditorPage() {
+interface EditorPageProps {
+  onNavigate?: (page: string) => void
+}
+
+export function EditorPage({ onNavigate }: EditorPageProps) {
   const { sidebarOpen, rightPanelOpen, activeTab, rightTab, setActiveTab, setRightTab } = useUIStore()
 
   return (
@@ -19,7 +23,7 @@ export function EditorPage() {
       backgroundColor: '#ffffff',
       fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
     }}>
-      <Toolbar />
+      <Toolbar onNavigate={onNavigate} />
 
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
         {sidebarOpen && (

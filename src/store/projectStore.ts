@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { nanoid } from 'nanoid'
 import type { Page, Project, ProjectSettings, User } from '@/types'
+import { saveToDisk, loadFromDisk } from '@/lib/storage'
 
 interface ProjectState {
   projects: Project[]
@@ -21,6 +22,8 @@ interface ProjectState {
   updateProjectSettings: (settings: Partial<ProjectSettings>) => void
   getCurrentProject: () => Project | undefined
   getCurrentPage: () => Page | undefined
+  saveToStorage: () => void
+  loadFromStorage: () => boolean
 }
 
 export const useProjectStore = create<ProjectState>((set, get) => ({
@@ -116,5 +119,20 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
   getCurrentPage: () => {
     const state = get()
     return state.currentPageId ? state.pages[state.currentPageId] : undefined
+  },
+
+  saveToStorage: () => {
+    const { projects, pages } = get()
+    saveToDisk({ projects, pages })
+  },
+
+  loadFromStorage: () => {
+    const saved = loadFromDisk()
+    if (!saved) return false
+    const projects = saved.projects || []
+    const pages = saved.pages || {}
+    const currentProjectId = projects.length > 0 ? projects[0].id : null
+    set({ projects, pages, currentProjectId })
+    return projects.length > 0
   },
 }))

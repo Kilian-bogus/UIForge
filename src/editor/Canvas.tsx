@@ -1,14 +1,11 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { useEditorStore } from '@/store/editorStore'
-import { useUIStore } from '@/store/uiStore'
 import { renderBuiltInComponent } from '@/components/BuiltInRenderer'
 import { getComponentDefinition } from '@/components/registry'
-import { cn } from '@/lib/cn'
 
 export function Canvas() {
   const { nodes, rootIds, selectedNodeId, hoveredNodeId, selectNode, hoverNode, addComponent, removeComponent, moveComponent, viewMode, zoom } = useEditorStore()
   const setDragging = useEditorStore(s => s.setDragging)
-  const activeTab = useUIStore(s => s.rightTab)
   const [dropIndicator, setDropIndicator] = useState<{ parentId: string | null; index: number } | null>(null)
   const canvasRef = useRef<HTMLDivElement>(null)
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import type { ComponentDefinition } from '@/types'
 import { getAllComponentDefinitions, getCategories } from '@/components/registry'
-import { cn } from '@/lib/cn'
 import * as Icons from 'lucide-react'
 
 export function ComponentPalette() {

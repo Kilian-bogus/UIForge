@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { nanoid } from 'nanoid'
 import type { ComponentInstance, ComponentType } from '@/types'
 import { getComponentDefinition } from '@/components/registry'
+import { saveToDisk, loadFromDisk } from '@/lib/storage'
 
 export interface HistoryEntry {
   nodes: Record<string, ComponentInstance>
@@ -38,6 +39,8 @@ interface EditorState {
   setViewMode: (mode: 'editor' | 'preview' | 'mobile' | 'tablet') => void
   setZoom: (z: number) => void
   loadProject: (nodes: Record<string, ComponentInstance>, rootIds: string[]) => void
+  saveToStorage: () => void
+  loadFromStorage: () => boolean
   getFlatList: () => ComponentInstance[]
   canUndo: () => boolean
   canRedo: () => boolean
@@ -61,8 +64,8 @@ export const useEditorStore = create<EditorState>((set, get) => ({
   selectedNodeId: null,
   hoveredNodeId: null,
   clipboard: null,
-  history: [],
-  historyIndex: -1,
+  history: [{ nodes: {}, rootIds: [], timestamp: Date.now() }],
+  historyIndex: 0,
   isDragging: false,
   showGrid: true,
   zoom: 100,
@@ -276,25 +279,26 @@ export const useEditorStore = create<EditorState>((set, get) => ({
       }
     }
 
+    const mergedRootIds = [...state.rootIds.filter((r: string) => !newRootIds.includes(r)), ...newRootIds]
     set({
       nodes: newNodes,
-      rootIds: [...state.rootIds.filter((r: string) => !newRootIds.includes(r)), ...newRootIds],
+      rootIds: mergedRootIds,
       selectedNodeId: newRootIds[0] || state.selectedNodeId,
-      ...pushHistory({ ...state, nodes: newNodes, rootIds: state.rootIds }),
+      ...pushHistory({ ...state, nodes: newNodes, rootIds: mergedRootIds }),
     })
   },
 
   undo: () => {
     const state = get()
-    if (state.historyIndex < 0) return
-    const entry = state.history[state.historyIndex]
+    if (state.historyIndex <= 0) return
+    const entry = state.history[state.historyIndex - 1]
     set({ nodes: JSON.parse(JSON.stringify(entry.nodes)), rootIds: [...entry.rootIds], historyIndex: state.historyIndex - 1 })
   },
 
   redo: () => {
     const state = get()
     if (state.historyIndex >= state.history.length - 1) return
-    const entry = state.history[state.historyIndex + 2]
+    const entry = state.history[state.historyIndex + 1]
     if (!entry) return
     set({ nodes: JSON.parse(JSON.stringify(entry.nodes)), rootIds: [...entry.rootIds], historyIndex: state.historyIndex + 1 })
   },
@@ -308,11 +312,23 @@ export const useEditorStore = create<EditorState>((set, get) => ({
     set({ nodes, rootIds, history: [entry], historyIndex: 0, selectedNodeId: null })
   },
 
+  saveToStorage: () => {
+    const { nodes, rootIds } = get()
+    saveToDisk({ editorNodes: nodes, editorRootIds: rootIds })
+  },
+
+  loadFromStorage: () => {
+    const saved = loadFromDisk()
+    if (!saved || !saved.editorNodes) return false
+    set({ nodes: saved.editorNodes, rootIds: saved.editorRootIds || [] })
+    return true
+  },
+
   getFlatList: () => {
     const state = get()
     return Object.values(state.nodes)
   },
 
-  canUndo: () => get().historyIndex >= 0,
-  canRedo: () => get().historyIndex < get().history.length - 2,
+  canUndo: () => get().historyIndex > 0,
+  canRedo: () => get().historyIndex < get().history.length - 1,
 }))

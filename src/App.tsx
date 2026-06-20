@@ -10,7 +10,7 @@ export default function App() {
       {currentPage === 'dashboard' && (
         <Dashboard onNavigate={(page) => setCurrentPage(page)} />
       )}
-      {currentPage === 'editor' && <EditorPage />}
+      {currentPage === 'editor' && <EditorPage onNavigate={(page) => setCurrentPage(page)} />}
     </>
   )
 }

@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useProjectStore } from '@/store/projectStore'
 import { useEditorStore } from '@/store/editorStore'
+import { loadFromDisk } from '@/lib/storage'
 import * as Icons from 'lucide-react'
 
 interface DashboardProps {
@@ -12,6 +13,13 @@ export function Dashboard({ onNavigate }: DashboardProps) {
   const { loadProject } = useEditorStore()
   const [showCreate, setShowCreate] = useState(false)
   const [name, setName] = useState('')
+
+  useEffect(() => {
+    const saved = loadFromDisk()
+    if (saved && saved.projects && saved.projects.length > 0) {
+      useProjectStore.getState().loadFromStorage()
+    }
+  }, [])
 
   const handleCreate = () => {
     if (!name.trim()) return

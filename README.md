@@ -1,105 +1,140 @@
 <div align="center">
-
-# ⚒️ UIForge
-
-**Visual UI Builder — Drag, Drop, Export.**
-
-<br>
-
-![Version](https://img.shields.io/badge/version-1.0.0-38BDF8?style=for-the-badge)
-![Status](https://img.shields.io/badge/status-active-22C55E?style=for-the-badge)
-![License](https://img.shields.io/badge/license-MIT-22C55E?style=for-the-badge)
-![Node](https://img.shields.io/badge/node-%3E%3D18-339933?style=for-the-badge&logo=node.js&logoColor=white)
-
+  <br>
+  <img src="public/vite.svg" width="64" height="64" alt="UIForge Logo">
+  <h1 align="center">⚒️ UIForge</h1>
+  <p align="center">
+    <strong>Visual UI Builder — Drag, Drop, Export.</strong>
+    <br>
+    Designe Interfaces visuell im Browser und exportiere sauberen React/HTML-Code.
+  </p>
+  <br>
+  <p>
+    <img src="https://img.shields.io/badge/version-2.0.0-3b82f6?style=for-the-badge&labelColor=1e293b" alt="Version 2.0.0">
+    <img src="https://img.shields.io/badge/status-stable-22c55e?style=for-the-badge&labelColor=1e293b" alt="Status Stable">
+    <img src="https://img.shields.io/badge/license-MIT-22c55e?style=for-the-badge&labelColor=1e293b" alt="MIT License">
+    <img src="https://img.shields.io/badge/react-18-3b82f6?style=for-the-badge&labelColor=1e293b&logo=react" alt="React 18">
+    <img src="https://img.shields.io/badge/typescript-5.5-3178c6?style=for-the-badge&labelColor=1e293b&logo=typescript" alt="TypeScript 5.5">
+  </p>
+  <br>
 </div>
-
----
-
-## Table of Contents
-
-- [Overview](#-overview)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [Production Build](#-production-build)
-- [Deployment](#-deployment)
-  - [Node.js Server](#nodejs-server)
-  - [Pterodactyl Panel](#pterodactyl-panel)
-- [Project Structure](#-project-structure)
-- [API Endpoints](#-api-endpoints)
-- [Screenshots](#-screenshots)
-- [Local Development](#-local-development)
-- [Roadmap](#-roadmap)
-- [License](#-license)
-
----
-
-## 📖 Overview
-
-**UIForge** is a full-featured visual UI builder that lets you design, prototype, and export interfaces directly in the browser. Built with React and powered by a Node.js backend, it provides an intuitive drag-and-drop canvas, a rich component library, and one-click code export.
-
-> **Live Demo:** [http://178.104.142.87:3004](http://178.104.142.87:3004)
 
 ---
 
 ## ✨ Features
 
-| Feature | Description |
-|---------|-------------|
-| 🖱️ **Drag & Drop Canvas** | Build pages visually by dragging components onto a live canvas |
-| 🧩 **Component Library** | Pre-built components — buttons, cards, inputs, layouts, navbars, and more |
-| 🎨 **Live Style Editor** | Tweak colors, spacing, typography, and see changes instantly |
-| 📄 **Page Manager** | Create, rename, reorder and delete pages within your project |
-| 👥 **User Authentication** | Register, login — each user gets their own projects |
-| 📤 **Code Export** | Export your design as clean React/JSX code |
-| 🌙 **Dark Mode** | Built-in dark theme for comfortable editing |
-| 🔌 **REST API** | Full backend API for projects, pages, components and media |
-| 📱 **Responsive** | Works on desktop and tablet |
+<table>
+  <tr>
+    <td align="center" width="140">
+      <br>
+      <h3>🖱️</h3>
+      <br>
+      <b>Drag & Drop</b>
+    </td>
+    <td width="300">Baue Seiten visuell — ziehe Komponenten per Drag & Drop auf die Leinwand.</td>
+    <td align="center" width="140">
+      <br>
+      <h3>🎨</h3>
+      <br>
+      <b>Live Editor</b>
+    </td>
+    <td width="300">Bearbeite Eigenschaften und Styles in Echtzeit mit sofortiger Vorschau.</td>
+  </tr>
+  <tr>
+    <td align="center">
+      <br>
+      <h3>🧩</h3>
+      <br>
+      <b>Library</b>
+    </td>
+    <td>20+ vorgefertigte Komponenten — Container, Cards, Formulare, Navigation uvm.</td>
+    <td align="center">
+      <br>
+      <h3>📄</h3>
+      <br>
+      <b>Export</b>
+    </td>
+    <td>Exportiere als React JSX, React TypeScript oder reines HTML+CSS.</td>
+  </tr>
+  <tr>
+    <td align="center">
+      <br>
+      <h3>↩️</h3>
+      <br>
+      <b>Undo/Redo</b>
+    </td>
+    <td>Unbegrenztes Rückgängig & Wiederherstellen für jede Änderung.</td>
+    <td align="center">
+      <br>
+      <h3>📱</h3>
+      <br>
+      <b>Responsive</b>
+    </td>
+    <td>Vorschau für Desktop, Tablet und Mobile — inklusive Zoom.</td>
+  </tr>
+  <tr>
+    <td align="center">
+      <br>
+      <h3>💾</h3>
+      <br>
+      <b>Lokal speichern</b>
+    </td>
+    <td>Projekte werden automatisch im Browser gespeichert.</td>
+    <td align="center">
+      <br>
+      <h3>🔌</h3>
+      <br>
+      <b>REST API</b>
+    </td>
+    <td>Vollständige Backend-API mit JWT-Authentifizierung.</td>
+  </tr>
+</table>
 
 ---
 
-## 🛠 Tech Stack
+## 🛠️ Tech Stack
 
 ```
-Frontend          Backend           Build Tools
-┌────────────┐   ┌────────────┐   ┌────────────┐
-│  React 18  │   │  Express   │   │   Vite     │
-│  Zustand   │   │   JWT      │   │  TypeScript│
-│  dnd-kit   │   │  bcryptjs  │   │ TailwindCSS│
-│ Monaco     │   │    UUID    │   │  PostCSS   │
-└────────────┘   └────────────┘   └────────────┘
+┌─────────────────────────────────────────────────────────┐
+│                      UIForge                            │
+├──────────────┬──────────────────┬───────────────────────┤
+│   Frontend   │     Backend      │      Build            │
+├──────────────┼──────────────────┼───────────────────────┤
+│  React 18    │  Express.js      │  Vite 5               │
+│  TypeScript  │  JWT Auth        │  TypeScript 5.5       │
+│  Zustand     │  bcryptjs        │  Tailwind CSS 3       │
+│  dnd-kit     │  JSON Storage    │  PostCSS / Autoprefixer│
+│  Monaco      │  UUID            │                       │
+│  Lucide Icons│  CORS / Multer   │                       │
+│  Tailwind CSS│                  │                       │
+└──────────────┴──────────────────┴───────────────────────┘
 ```
-
-- **Frontend:** React 18, TypeScript, Zustand (state), dnd-kit (drag & drop), Monaco Editor, Tailwind CSS
-- **Backend:** Express.js, JWT authentication, bcryptjs, JSON file storage
-- **Build:** Vite, TypeScript, PostCSS, Autoprefixer
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### Voraussetzungen
 
-- [Node.js](https://nodejs.org/) v18 or later
-- npm (comes with Node.js)
+- [Node.js](https://nodejs.org/) v18 oder höher
+- npm (wird mit Node.js installiert)
 
-### Installation
+### Installation & Start
 
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/uiforge.git
+# Repository klonen
+git clone https://github.com/dein-username/uiforge.git
 cd uiforge
 
-# Install dependencies
+# Abhängigkeiten installieren
 npm install
 
-# Start development server
+# Entwicklungsserver starten (Frontend + API-Proxy)
 npm run dev
 ```
 
-The Vite dev server starts on `http://localhost:5173` and proxies API requests to the backend at `http://localhost:3001`.
+Öffne **http://localhost:5173** im Browser.
 
-In a **second terminal**, start the API server:
+Für die vollständige API (optional) in einem zweiten Terminal:
 
 ```bash
 npm run server
@@ -107,40 +142,32 @@ npm run server
 
 ---
 
-## 🔨 Production Build
-
-Build the frontend for production:
+## 🏗️ Production Build
 
 ```bash
 npm run build
 ```
 
-This generates the static frontend in the `dist/` folder (TypeScript check + Vite production build).
+Erzeugt das optimierte Frontend im `dist/` Ordner.
 
----
-
-## 📦 Deployment
-
-### Node.js Server
-
-To build a complete deployable package:
+### Deployment-Paket erstellen
 
 ```bash
 npm run deploy
 ```
 
-This creates a `deploy/` folder containing everything needed to run on any Node.js server:
+Erstellt einen `deploy/` Ordner mit allem, was für den Server benötigt wird:
 
 ```
 deploy/
-├── index.js          # Express server (API + static files)
-├── package.json      # All dependencies (frontend + backend)
-└── dist/             # Built frontend
+├── index.js          # Express-Server (API + Static Files)
+├── package.json      # Alle Dependencies
+└── dist/             # Gebautes Frontend
     ├── index.html
     └── assets/
 ```
 
-Upload the `deploy/` folder to your server and start it:
+Auf dem Server:
 
 ```bash
 cd deploy
@@ -148,167 +175,175 @@ npm install
 node index.js
 ```
 
-Your application will be available at:
+Die Anwendung läuft dann auf **http://localhost:3004**.
 
-> **http://178.104.142.87:3004**
-
-> [!TIP]
-> Override the port via environment variable: `PORT=8080 node index.js`
+> **Tipp:** Port über `PORT=8080 node index.js` anpassen.
 
 ---
 
-### Pterodactyl Panel
-
-For **Pterodactyl** (or similar game/server panels):
-
-1. Run `npm run deploy` locally to generate the `deploy/` folder
-2. Upload the **contents** of `deploy/` (not the folder itself) to `/home/container/`
-3. Set the **Startup Command** to: `node index.js`
-4. Make sure the panel runs `npm install` during installation
-
-**Required files in `/home/container/`:**
+## 📁 Projektstruktur
 
 ```
-/home/container/
-├── index.js
-├── package.json
-├── dist/
-│   ├── index.html
-│   └── assets/
-```
-
-Pterodactyl handles `npm install` automatically. After that, `node index.js` starts UIForge on port **3004**.
-
----
-
-## 📁 Project Structure
-
-```
-js-ui-builder/
-├── index.js               # Production server (ESM, Express + API)
-├── package.json            # Root package with all dependencies
-├── vite.config.ts          # Vite configuration
-├── tsconfig.json           # TypeScript configuration
-├── index.html              # Vite entry HTML
-├── deploy.js               # Deploy script (builds deploy/ folder)
-├── build.ps1               # PowerShell build script
-├── build.bat               # Windows batch build script
-├── server/
-│   └── index.js            # Development server (CJS, kept for npm run server)
+uiforge/
+├── index.js                 # Production Server (ESM)
+├── index.html               # Vite Entry
+├── public/
+│   └── vite.svg             # Favicon / Logo
 ├── src/
-│   ├── main.tsx            # React entry point
-│   ├── App.tsx             # Root component
-│   ├── components/         # React components
-│   │   ├── Canvas.tsx
-│   │   ├── Sidebar.tsx
-│   │   ├── Toolbar.tsx
-│   │   ├── ComponentPanel.tsx
-│   │   ├── Editor.tsx
-│   │   ├── Preview.tsx
-│   │   ├── ExportPanel.tsx
-│   │   ├── LoginForm.tsx
-│   │   ├── ProjectList.tsx
-│   │   └── registry.ts
-│   ├── store/              # Zustand state stores
-│   │   ├── editorStore.ts
-│   │   ├── projectStore.ts
-│   │   └── uiStore.ts
-│   ├── types/              # TypeScript type definitions
-│   │   ├── component.ts
-│   │   ├── page.ts
-│   │   └── project.ts
+│   ├── main.tsx             # React Entry Point
+│   ├── App.tsx              # Root Component mit Navigation
+│   ├── components/
+│   │   ├── registry.ts      # Komponenten-Definitionen (20+ Typen)
+│   │   └── BuiltInRenderer.tsx # Render-Logik für alle Komponenten
+│   ├── editor/
+│   │   ├── Canvas.tsx       # Drag & Drop Leinwand
+│   │   ├── Toolbar.tsx      # Werkzeugleiste (Undo, Zoom, Export)
+│   │   ├── ComponentPalette.tsx # Komponenten-Auswahl
+│   │   ├── PropertiesPanel.tsx   # Eigenschaften-Editor
+│   │   └── ExportDialog.tsx # Code-Export Dialog
+│   ├── pages/
+│   │   ├── Dashboard.tsx    # Projektübersicht
+│   │   ├── EditorPage.tsx   # Haupt-Editor (Split-View)
+│   │   └── SettingsPage.tsx # Projekteinstellungen
+│   ├── store/
+│   │   ├── editorStore.ts   # Editor-State (Nodes, History, Selection)
+│   │   ├── projectStore.ts  # Projekt-State (Projects, Pages)
+│   │   └── uiStore.ts       # UI-State (Panels, Theme, Toasts)
+│   ├── types/
+│   │   ├── component.ts     # ComponentInstance, PropDefinition
+│   │   ├── page.ts          # Page Interface
+│   │   └── project.ts       # Project, ProjectSettings
+│   ├── export/
+│   │   ├── index.ts         # Export-Hub
+│   │   └── reactExport.ts   # React/HTML Code-Generatoren
 │   ├── lib/
-│   │   └── cn.ts           # Utility for class merging
-│   └── export/
-│       ├── index.ts
-│       └── reactExport.ts
-├── dist/                   # Built frontend (generated)
-└── deploy/                 # Deployable package (generated by npm run deploy)
+│   │   ├── cn.ts            # Tailwind class merge utility
+│   │   └── storage.ts       # localStorage Persistenz
+│   ├── preview/
+│   │   └── PreviewFrame.tsx # Live-Vorschau
+│   └── styles/
+│       └── index.css        # Globale Styles, Tailwind, Keyframes
+├── server/
+│   └── index.js             # Development Server (CJS)
+├── deploy.js                # Deployment-Script
+├── build.ps1                # PowerShell Build-Script
+├── build.bat                # Windows Batch Build
+├── vite.config.ts           # Vite-Konfiguration
+├── tsconfig.json            # TypeScript-Konfiguration
+├── tailwind.config.js       # Tailwind-Konfiguration
+├── postcss.config.js        # PostCSS-Konfiguration
+└── package.json             # Projekt-Metadaten & Scripts
 ```
 
 ---
 
 ## 🔌 API Endpoints
 
-All API routes are prefixed with `/api`.
+Alle API-Routen sind mit `/api` prefixiert. Authentifizierte Endpoints benötigen einen `Authorization: Bearer <token>` Header.
 
 ### Authentication
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/auth/register` | Register a new user |
-| `POST` | `/api/auth/login` | Login with email & password |
-| `GET`  | `/api/auth/me` | Get current user info *(auth required)* |
+| Methode | Endpoint | Beschreibung |
+|---------|----------|-------------|
+| `POST` | `/api/auth/register` | Benutzer registrieren |
+| `POST` | `/api/auth/login` | Login (Email & Passwort) |
+| `GET` | `/api/auth/me` | Aktuellen Benutzer abrufen * |
 
-### Projects
+### Projekte
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET`  | `/api/projects` | List all projects *(auth)* |
-| `POST` | `/api/projects` | Create a project *(auth)* |
-| `GET`  | `/api/projects/:id` | Get project details *(auth)* |
-| `PUT`  | `/api/projects/:id` | Update project *(auth)* |
-| `DELETE` | `/api/projects/:id` | Delete project *(auth)* |
+| Methode | Endpoint | Beschreibung |
+|---------|----------|-------------|
+| `GET` | `/api/projects` | Alle Projekte des Benutzers * |
+| `POST` | `/api/projects` | Neues Projekt erstellen * |
+| `GET` | `/api/projects/:id` | Projektdetails * |
+| `PUT` | `/api/projects/:id` | Projekt aktualisieren * |
+| `DELETE` | `/api/projects/:id` | Projekt löschen * |
 
-### Pages
+### Seiten & Komponenten
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/pages` | Create a new page *(auth)* |
-| `PUT`  | `/api/pages/:id` | Update page *(auth)* |
-| `DELETE` | `/api/pages/:id` | Delete page *(auth)* |
+| Methode | Endpoint | Beschreibung |
+|---------|----------|-------------|
+| `POST` | `/api/pages` | Neue Seite erstellen * |
+| `PUT` | `/api/pages/:id` | Seite aktualisieren * |
+| `DELETE` | `/api/pages/:id` | Seite löschen * |
+| `POST` | `/api/pages/:id/components` | Komponenten speichern * |
+| `GET` | `/api/pages/:id/components` | Komponenten abrufen * |
 
-### Components
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/pages/:id/components` | Save page components *(auth)* |
-| `GET`  | `/api/pages/:id/components` | Get page components *(auth)* |
-
-### Media & Stats
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET`  | `/api/media` | List uploaded media *(auth)* |
-| `GET`  | `/api/stats` | Get user statistics *(auth)* |
+*\* = Authentifizierung erforderlich*
 
 ---
 
-## 🖥️ Local Development
+## 🧩 Komponenten
 
-Start both the frontend and backend simultaneously:
+| Komponente | Kategorie | Kinder? | Beschreibung |
+|-----------|-----------|---------|-------------|
+| Container | Layout | ✅ | Flex-Container mit Direction, Justify, Align |
+| Section | Layout | ✅ | Abschnitt mit Hintergrund & Padding |
+| Grid | Layout | ✅ | CSS-Grid mit einstellbaren Spalten |
+| Column | Layout | ✅ | Grid-Spalte mit Span |
+| Header | Layout | ✅ | Kopfzeile |
+| Footer | Layout | ✅ | Fußzeile mit Hintergrund |
+| Heading | Basic | ❌ | Überschrift (H1-H4) |
+| Text | Basic | ❌ | Textabsatz |
+| Button | Basic | ❌ | Button mit Varianten & Größen |
+| Image | Media | ❌ | Bild mit Object-Fit |
+| Video | Media | ❌ | YouTube/Vimeo/Direct Embed |
+| Input | Form | ❌ | Eingabefeld mit Label |
+| Textarea | Form | ❌ | Mehrzeiliges Textfeld |
+| Form | Form | ✅ | Formular mit Submit-Button |
+| Card | Content | ✅ | Karte mit Shadow & Padding |
+| Divider | Basic | ❌ | Horizontale Trennlinie |
+| Spacer | Layout | ❌ | Leerraum |
+| Link | Basic | ❌ | Hyperlink |
+| NavBar | Navigation | ✅ | Navigationsleiste mit Brand |
+| RawHTML | Custom | ❌ | Benutzerdefinierter HTML-Code |
 
-```bash
-# Terminal 1 — Vite dev server (port 5173)
-npm run dev
+---
 
-# Terminal 2 — Express API server (port 3001)
-npm run server
-```
+## 🔧 Bugfixes & Changelog
 
-Or use the Vite proxy (already configured in `vite.config.ts`) so API calls from `localhost:5173` are forwarded to `localhost:3001`.
+### Version 2.0.0
+
+- **🔨 Undo/Redo gefixt** — Die History-Engine speichert jetzt korrekt Zwischenzustände; Undo und Redo funktionieren zuverlässig über beliebig viele Schritte
+- **🧭 Dashboard-Navigation** — Vom Editor zurück zur Projektübersicht (neuer Zurück-Button in der Toolbar)
+- **💾 Lokale Persistenz** — Projekte und Editor-Zustand werden automatisch im Browser gespeichert und beim Neuladen wiederhergestellt
+- **🖼️ Favicon** — Eigenes UIForge-Logo als SVG-Favicon
+- **🧹 Code bereinigt** — Unbenutzte Imports entfernt, TypeScript strikter
+- **🎨 README** — Vollständig überarbeitet mit detaillierter Dokumentation
 
 ---
 
 ## 🧭 Roadmap
 
-- [ ] Drag-and-drop component positioning
-- [ ] Component resizing and alignment guides
-- [ ] More export targets (HTML/CSS, Vue, Svelte)
-- [ ] Custom component creation
-- [ ] Team collaboration
-- [ ] Database storage (SQLite / PostgreSQL)
-- [ ] Plugin system
-- [ ] i18n support
+- [x] Lokale Persistenz (localStorage)
+- [x] Undo/Redo History
+- [ ] Drag & Drop Positionierung (`@dnd-kit`)
+- [ ] Komponenten-Resizing & Alignment-Guides
+- [ ] Weitere Export-Ziele (Vue, Svelte)
+- [ ] Eigene Komponenten erstellen
+- [ ] Team-Zusammenarbeit
+- [ ] Datenbank-Storage (SQLite / PostgreSQL)
+- [ ] Plugin-System
+- [ ] i18n / Mehrsprachigkeit
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** — feel free to use, modify, and distribute.
+Dieses Projekt steht unter der **MIT License** — frei verwendbar, modifizierbar und verteilbar.
 
 ---
 
-<sub>[Report Bug](https://github.com/your-username/uiforge/issues) · [Request Feature](https://github.com/your-username/uiforge/issues) · [178.104.142.87:3004](http://178.104.142.87:3004)</sub>
-
+<div align="center">
+  <br>
+  <sub>
+    Built with TypeScript, React & ❤️
+    <br>
+    <a href="http://178.104.142.87:3004">Live Demo</a> ·
+    <a href="https://github.com/dein-username/uiforge/issues">Bug melden</a> ·
+    <a href="https://github.com/dein-username/uiforge/issues">Feature vorschlagen</a>
+  </sub>
+  <br>
+  <br>
+  <img src="https://img.shields.io/badge/made_with-❤️-ef4444?style=flat-square" alt="Made with love">
 </div>
