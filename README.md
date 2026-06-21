@@ -3,7 +3,7 @@
   <img src="public/vite.svg" width="64" height="64" alt="UIForge Logo">
   <h1 align="center">⚒️ UIForge</h1>
   <p align="center">
-    <strong>Visual UI Builder — gemacht mit ❤️ von einem Solo-Dev für alle</strong>
+    <strong>Visual UI Builder</strong>
     <br>
     Baue Interfaces visuell im Browser und exportiere sauberen Code.
   </p>
@@ -23,7 +23,7 @@
 
 Hallo du! Schön, dass du hier bist. 👋
 
-**UIForge** ist ein visueller UI-Builder — ein Projekt, das ich ganz allein in unzähligen Abendstunden und Wochenenden zusammengebaut habe. Es hilft dir, Interfaces per Drag & Drop zu designen und als sauberen React/HTML-Code zu exportieren. Kein Team, kein grosses Budget, nur ich, mein Editor und eine Menge Kaffee ☕
+**UIForge** ist ein visueller UI-Builder — ein Projekt, das ich ganz allein in unzähligen Abendstunden und Wochenenden zusammengebaut habe. Es hilft dir, Interfaces per Drag & Drop zu designen und als sauberen React/HTML-Code zu exportieren.
 
 Wenn du Fehler findest, Dinge vermisst oder einfach nur Hallo sagen willst — freue ich mich über jede Nachricht!
 
@@ -314,13 +314,6 @@ uiforge/
 - [x] **Plugin-System**
 - [x] **i18n / Mehrsprachigkeit**
 
-### 🌟 Solo-Dev-Specials (weil ich ja allein bin)
-
-- **📝 Notizen & Kommentare** — Mach dir Notizen zu deinen Projekten, wie ich sie mir auch mache
-- **🎯 Fokus-Modus** — Kein Team-Gedöns, nur du und dein Projekt
-- **💪 Persönlicher Workspace** — Alles offline-first, alles gehört dir
-- **☕ Dev-Tagebuch** — Tracke deinen Fortschritt, wie ich meinen tracke
-
 ---
 
 ## 🔧 Bugfixes & Changelog
@@ -390,8 +383,6 @@ Dieses Projekt habe ich ganz allein gebaut — in Feierabenden, an Wochenenden, 
 - **Einen ⭐ auf GitHub** — das motiviert ungemein!
 - **Feedback & Ideen** — was fehlt, was könnte besser sein?
 - **Weitersagen** — wenn es jemandem helfen könnte
-
-Und wenn du auch Solo-Dev bist: **Bleib dran!** Jedes große Projekt fängt klein an. 🌱
 
 ---
 
