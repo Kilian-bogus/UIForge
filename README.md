@@ -539,7 +539,7 @@ Dieses Projekt steht unter der **MIT License** — frei verwendbar, modifizierba
 <div align="center">
   <br>
   <sub>
-    Gebaut mit TypeScript, React, ganz viel ❤️ und zu wenig Schlaf
+    Gebaut mit TypeScript und React
     <br>
     <a href="http://178.104.142.87:3004">Live Demo</a> ·
     <a href="https://github.com/dein-username/uiforge/issues">Bug melden</a> ·
