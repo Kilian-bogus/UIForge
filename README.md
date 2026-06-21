@@ -302,17 +302,161 @@ uiforge/
 
 ## 🧭 Roadmap — was noch kommt
 
-*Weil ich das allein mache, geht es vielleicht etwas langsamer — aber dafür mit ganz viel Liebe zum Detail.* 🌱
+## Version 2.2
 
-- [x] Lokale Persistenz (localStorage)
-- [x] Undo/Redo History
-- [x] **Drag & Drop Positionierung** (`@dnd-kit`)
-- [x] **Komponenten-Resizing & Alignment-Guides**
-- [x] **Weitere Export-Ziele** (Vue, Svelte)
-- [x] **Eigene Komponenten erstellen**
-- [x] **Datenbank-Storage** (SQLite / IndexedDB)
-- [x] **Plugin-System**
-- [x] **i18n / Mehrsprachigkeit**
+### Editor
+
+* Multi-Select Components
+* Group & Ungroup Elements
+* Copy / Paste Components
+* Layer Locking
+* Layer Visibility Toggle
+* Keyboard Shortcuts
+* Improved Canvas Performance
+
+### Components
+
+* Tabs
+* Accordion
+* Modal/Dialog
+* Dropdown Menus
+* Navigation Bars
+* Data Tables
+* Charts & Graphs
+
+### Export
+
+* Next.js Export
+* Nuxt Export
+* Astro Export
+* Improved React TSX Output
+* Export Optimizations
+
+---
+
+## Version 2.3
+
+### Collaboration
+
+* Real-Time Collaboration
+* Shared Projects
+* Live Presence Indicators
+* Comments & Feedback System
+
+### Design Tools
+
+* Global Color Variables
+* Typography System
+* Design Tokens
+* Theme Management
+* Style Presets
+
+### Productivity
+
+* Command Palette
+* Quick Actions
+* Project Search
+* Reusable Templates
+
+---
+
+## Version 2.4
+
+### Advanced Editing
+
+* Auto Layout
+* Constraints System
+* Responsive Breakpoints
+* Flexbox Editor
+* Grid Layout Editor
+
+### Assets
+
+* Media Library
+* Asset Manager
+* Icon Browser
+* Font Management
+
+### Plugins
+
+* Plugin Marketplace
+* Plugin Manager
+* One-Click Installation
+* Plugin Settings API
+
+---
+
+## Version 2.5
+
+### AI Features
+
+* Generate UI from Prompt
+* AI Layout Suggestions
+* Component Recommendations
+* Smart Auto-Layout
+* AI Accessibility Checks
+
+### Accessibility
+
+* WCAG Validation
+* Accessibility Scanner
+* Contrast Checker
+* Semantic HTML Suggestions
+
+---
+
+## Version 3.0
+
+### Cloud Platform
+
+* Cloud Sync
+* Project Backup
+* Version History
+* Team Workspaces
+* Organization Accounts
+
+### Enterprise Features
+
+* Role Management
+* Project Permissions
+* Audit Logs
+* Team Templates
+
+### Developer Experience
+
+* Public API
+* CLI Tool
+* SDK
+* Webhooks
+* Git Integration
+
+---
+
+# Future Ideas
+
+* Mobile App
+* Electron Desktop Version
+* Native Windows Application
+* Native macOS Application
+* Native Linux Application
+* Component Marketplace Revenue Sharing
+* Template Marketplace
+* White-Label Support
+* Self-Hosted Cloud
+* Figma Import
+* Figma Export
+* Tailwind Visual Builder
+* Shadcn/UI Integration
+* Material Design Integration
+* Bootstrap Integration
+* Storybook Export
+* Visual Animation Editor
+* State Management Editor
+* Database Connectors
+* Authentication Builder
+* CMS Integrations
+* Docker Deployment Templates
+
 
 ---
 
