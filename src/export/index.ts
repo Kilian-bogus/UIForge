@@ -1,7 +1,9 @@
 import type { ComponentInstance } from '@/types'
 import { generateReactCode, generateHTMLCode } from './reactExport'
+import { generateVueCode } from './vueExport'
+import { generateSvelteCode } from './svelteExport'
 
-export type ExportFormat = 'react' | 'html' | 'react-ts'
+export type ExportFormat = 'react' | 'html' | 'react-ts' | 'vue' | 'svelte'
 
 export interface ExportResult {
   format: ExportFormat
@@ -35,6 +37,24 @@ export function exportProject(
         format,
         code,
         files: [{ name: 'index.html', content: code }],
+        language: 'html',
+      }
+    }
+    case 'vue': {
+      const code = generateVueCode(nodes, rootIds)
+      return {
+        format,
+        code,
+        files: [{ name: 'Page.vue', content: code }],
+        language: 'html',
+      }
+    }
+    case 'svelte': {
+      const code = generateSvelteCode(nodes, rootIds)
+      return {
+        format,
+        code,
+        files: [{ name: 'Page.svelte', content: code }],
         language: 'html',
       }
     }

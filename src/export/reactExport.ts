@@ -161,8 +161,12 @@ export function generateReactCode(nodes: Record<string, ComponentInstance>, root
         return `${ind}<div style={${style}}>\n${childContent}\n${ind}</div>`
       }
 
-      default:
+      default: {
+        if (node.type.startsWith('Custom_')) {
+          return `${ind}<div dangerouslySetInnerHTML={{ __html: ${JSON.stringify(p.html)} }} />`
+        }
         return `${ind}<div>{/* ${node.type} */}</div>`
+      }
     }
   }
 
@@ -307,6 +311,9 @@ export function generateHTMLCode(nodes: Record<string, ComponentInstance>, rootI
       case 'Column':
         return `${ind}<div style="grid-column:span ${p.span}">\n${childContent}\n${ind}</div>`
       default:
+        if (node.type.startsWith('Custom_')) {
+          return `${ind}${p.html}`
+        }
         return `${ind}<div><!-- ${node.type} --></div>`
     }
   }

@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import { useEditorStore } from '@/store/editorStore'
 import { useUIStore } from '@/store/uiStore'
 import { exportProject, type ExportFormat } from '@/export'
+import { useTranslation } from '@/store/i18nStore'
 
 export function ExportDialog() {
   const { nodes, rootIds } = useEditorStore()
   const { exportDialogOpen, setExportDialog, addToast } = useUIStore()
+  const { t } = useTranslation()
   const [format, setFormat] = useState<ExportFormat>('react')
   const [copied, setCopied] = useState(false)
 
@@ -18,9 +20,9 @@ export function ExportDialog() {
       await navigator.clipboard.writeText(result.code)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-      addToast('Code in Zwischenablage kopiert', 'success')
+      addToast(t('editor.export.success'), 'success')
     } catch {
-      addToast('Konnte nicht kopiert werden', 'error')
+      addToast(t('editor.export.error'), 'error')
     }
   }
 
@@ -32,13 +34,15 @@ export function ExportDialog() {
     a.download = result.files[0]?.name || 'export.txt'
     a.click()
     URL.revokeObjectURL(url)
-    addToast('Datei heruntergeladen', 'success')
+    addToast(t('toast.downloaded'), 'success')
   }
 
   const formats: { key: ExportFormat; label: string; desc: string }[] = [
-    { key: 'react', label: 'React (JSX)', desc: 'React-Komponente mit Inline-Styles' },
-    { key: 'react-ts', label: 'React (TypeScript)', desc: 'React-Komponente mit TypeScript' },
-    { key: 'html', label: 'HTML + CSS', desc: 'Reines HTML mit Inline-Styles' },
+    { key: 'react', label: t('editor.export.react'), desc: t('editor.export.reactDesc') },
+    { key: 'react-ts', label: t('editor.export.reactTs'), desc: t('editor.export.reactTsDesc') },
+    { key: 'html', label: t('editor.export.html'), desc: t('editor.export.htmlDesc') },
+    { key: 'vue', label: t('editor.export.vue'), desc: t('editor.export.vueDesc') },
+    { key: 'svelte', label: t('editor.export.svelte'), desc: t('editor.export.svelteDesc') },
   ]
 
   return (
@@ -54,11 +58,11 @@ export function ExportDialog() {
       }} onClick={e => e.stopPropagation()}>
         
         <div style={{ padding: '16px 24px', borderBottom: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 600 }}>Code exportieren</h2>
+          <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 600 }}>{t('editor.export.title')}</h2>
           <button onClick={() => setExportDialog(false)} style={{ padding: '4px 8px', border: 'none', background: 'none', cursor: 'pointer', fontSize: '20px', color: '#6b7280' }}>✕</button>
         </div>
 
-        <div style={{ display: 'flex', gap: '8px', padding: '12px 24px', borderBottom: '1px solid #f3f4f6' }}>
+        <div style={{ display: 'flex', gap: '8px', padding: '12px 24px', borderBottom: '1px solid #f3f4f6', flexWrap: 'wrap' }}>
           {formats.map(f => (
             <button
               key={f.key}
@@ -97,14 +101,14 @@ export function ExportDialog() {
 
         <div style={{ padding: '12px 24px', borderTop: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ fontSize: '12px', color: '#6b7280' }}>
-            {result.files.length} Datei{result.files.length !== 1 ? 'en' : ''} · ~{Math.ceil(result.code.length / 1000)} KB
+            {result.files.length} {t('editor.export.files')} · ~{Math.ceil(result.code.length / 1000)} KB
           </span>
           <div style={{ display: 'flex', gap: '8px' }}>
             <button onClick={handleCopy} style={btnStyle}>
-              {copied ? '✓ Kopiert!' : 'In Zwischenablage'}
+              {copied ? t('editor.export.copied') : t('editor.export.copy')}
             </button>
             <button onClick={handleDownload} style={{ ...btnStyle, backgroundColor: '#3b82f6', color: 'white' }}>
-              Herunterladen
+              {t('editor.export.download')}
             </button>
           </div>
         </div>

@@ -1,36 +1,65 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useRef } from 'react'
+import { useDroppable } from '@dnd-kit/core'
 import { useEditorStore } from '@/store/editorStore'
 import { renderBuiltInComponent } from '@/components/BuiltInRenderer'
 import { getComponentDefinition } from '@/components/registry'
+import { ResizeHandle } from './ResizeHandle'
+import { AlignmentGuides } from './AlignmentGuides'
+import { useTranslation } from '@/store/i18nStore'
+
+function DroppableCanvasInner({ children, viewMode, isOver }: { children: React.ReactNode; viewMode: string; isOver: boolean }) {
+  return (
+    <div
+      style={{
+        flex: 1,
+        overflow: 'auto',
+        backgroundColor: isOver ? '#e0f2fe' : (viewMode === 'editor' ? '#f3f4f6' : '#e5e7eb'),
+        display: 'flex',
+        justifyContent: 'center',
+        padding: viewMode !== 'editor' ? '40px 0' : 0,
+        transition: 'background-color 0.15s',
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+function DroppableNode({ nodeId, children, canHaveChildren }: { nodeId: string; children: React.ReactNode; canHaveChildren?: boolean }) {
+  const { setNodeRef, isOver } = useDroppable({
+    id: `node-${nodeId}`,
+    data: { parentId: nodeId },
+    disabled: !canHaveChildren,
+  })
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{
+        minHeight: canHaveChildren ? '30px' : undefined,
+        outline: isOver ? '2px dashed #3b82f6' : undefined,
+        outlineOffset: isOver ? '-1px' : undefined,
+        borderRadius: isOver ? '4px' : undefined,
+        transition: 'outline 0.1s, background-color 0.15s',
+      }}
+    >
+      {children}
+    </div>
+  )
+}
 
 export function Canvas() {
-  const { nodes, rootIds, selectedNodeId, hoveredNodeId, selectNode, hoverNode, addComponent, removeComponent, moveComponent, viewMode, zoom } = useEditorStore()
-  const setDragging = useEditorStore(s => s.setDragging)
-  const [dropIndicator, setDropIndicator] = useState<{ parentId: string | null; index: number } | null>(null)
+  const { t } = useTranslation()
+  const { nodes, rootIds, selectedNodeId, hoveredNodeId, selectNode, hoverNode, removeComponent, viewMode, zoom } = useEditorStore()
+  const { setNodeRef, isOver } = useDroppable({
+    id: 'canvas',
+    data: { parentId: null },
+  })
   const canvasRef = useRef<HTMLDivElement>(null)
 
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    e.dataTransfer.dropEffect = 'copy'
-    setDragging(true)
-  }, [setDragging])
-
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
-    if (canvasRef.current && !canvasRef.current.contains(e.relatedTarget as Node)) {
-      setDropIndicator(null)
-      setDragging(false)
-    }
-  }, [setDragging])
-
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault()
-    setDragging(false)
-    setDropIndicator(null)
-    const type = e.dataTransfer.getData('text/plain')
-    if (type) {
-      addComponent(type as any, null)
-    }
-  }, [addComponent])
+  const handleCanvasClick = useCallback(() => {
+    selectNode(null)
+  }, [selectNode])
 
   const viewModeStyles: React.CSSProperties = {
     width: viewMode === 'mobile' ? '375px' : viewMode === 'tablet' ? '768px' : '100%',
@@ -41,7 +70,11 @@ export function Canvas() {
     transition: 'all 0.3s ease',
   }
 
-  const renderNode = (nodeId: string, depth = 0): React.ReactNode => {
+  const handleResize = useCallback((nodeId: string, width: string, height: string) => {
+    useEditorStore.getState().updateComponentStyles(nodeId, { width, height })
+  }, [])
+
+  const renderNode = (nodeId: string): React.ReactNode => {
     const node = nodes[nodeId]
     if (!node) return null
 
@@ -49,13 +82,12 @@ export function Canvas() {
     const isSelected = selectedNodeId === nodeId
     const isHovered = hoveredNodeId === nodeId
 
-    const childElements = node.children?.map(childId => renderNode(childId, depth + 1))
+    const childElements = node.children?.map(childId => renderNode(childId))
 
     const rendered = renderBuiltInComponent(node, childElements)
 
-    return (
+    const inner = (
       <div
-        key={nodeId}
         data-node-id={nodeId}
         onClick={e => {
           e.stopPropagation()
@@ -63,22 +95,6 @@ export function Canvas() {
         }}
         onMouseEnter={() => hoverNode(nodeId)}
         onMouseLeave={() => hoverNode(null)}
-        onDragOver={e => {
-          e.preventDefault()
-          e.stopPropagation()
-          if (def?.canHaveChildren) {
-            e.dataTransfer.dropEffect = 'copy'
-            setDropIndicator({ parentId: nodeId, index: node.children.length })
-          }
-        }}
-        onDrop={e => {
-          e.preventDefault()
-          e.stopPropagation()
-          const type = e.dataTransfer.getData('text/plain')
-          if (type && def?.canHaveChildren) {
-            addComponent(type as any, nodeId)
-          }
-        }}
         style={{
           position: 'relative',
           outline: isSelected ? '2px solid #3b82f6' : isHovered && !isSelected ? '2px dashed #93c5fd' : '2px solid transparent',
@@ -90,29 +106,39 @@ export function Canvas() {
         }}
       >
         {isSelected && (
-          <div style={{
-            position: 'absolute',
-            top: '-24px',
-            right: 0,
-            display: 'flex',
-            gap: '2px',
-            zIndex: 100,
-          }}>
-            <button
-              onClick={e => { e.stopPropagation(); useEditorStore.getState().duplicateComponent(nodeId) }}
-              style={{ padding: '2px 6px', fontSize: '10px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}
-              title="Duplizieren"
-            >
-              ⧉
-            </button>
-            <button
-              onClick={e => { e.stopPropagation(); removeComponent(nodeId) }}
-              style={{ padding: '2px 6px', fontSize: '10px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}
-              title="Löschen"
-            >
-              ✕
-            </button>
-          </div>
+          <>
+            <div style={{
+              position: 'absolute',
+              top: '-24px',
+              right: 0,
+              display: 'flex',
+              gap: '2px',
+              zIndex: 100,
+            }}>
+              <button
+                onClick={e => { e.stopPropagation(); useEditorStore.getState().duplicateComponent(nodeId) }}
+                style={{ padding: '2px 6px', fontSize: '10px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}
+                title={t('editor.duplicate')}
+              >
+                ⧉
+              </button>
+              <button
+                onClick={e => { e.stopPropagation(); removeComponent(nodeId) }}
+                style={{ padding: '2px 6px', fontSize: '10px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '3px', cursor: 'pointer' }}
+                title={t('editor.delete')}
+              >
+                ✕
+              </button>
+            </div>
+            <ResizeHandle nodeId={nodeId} direction="se" onResize={handleResize} />
+            <ResizeHandle nodeId={nodeId} direction="sw" onResize={handleResize} />
+            <ResizeHandle nodeId={nodeId} direction="ne" onResize={handleResize} />
+            <ResizeHandle nodeId={nodeId} direction="nw" onResize={handleResize} />
+            <ResizeHandle nodeId={nodeId} direction="e" onResize={handleResize} />
+            <ResizeHandle nodeId={nodeId} direction="w" onResize={handleResize} />
+            <ResizeHandle nodeId={nodeId} direction="n" onResize={handleResize} />
+            <ResizeHandle nodeId={nodeId} direction="s" onResize={handleResize} />
+          </>
         )}
         <div
           style={{
@@ -136,25 +162,26 @@ export function Canvas() {
         {rendered}
       </div>
     )
+
+    if (def?.canHaveChildren) {
+      return (
+        <DroppableNode key={nodeId} nodeId={nodeId} canHaveChildren={def.canHaveChildren}>
+          {inner}
+        </DroppableNode>
+      )
+    }
+
+    return <div key={nodeId}>{inner}</div>
   }
 
   return (
-    <div
-      style={{
-        flex: 1,
-        overflow: 'auto',
-        backgroundColor: viewMode === 'editor' ? '#f3f4f6' : '#e5e7eb',
-        display: 'flex',
-        justifyContent: 'center',
-        padding: viewMode !== 'editor' ? '40px 0' : 0,
-      }}
-    >
+    <DroppableCanvasInner viewMode={viewMode} isOver={isOver}>
       <div
-        ref={canvasRef}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        onClick={() => selectNode(null)}
+        ref={(el) => {
+          setNodeRef(el)
+          ;(canvasRef as any).current = el
+        }}
+        onClick={handleCanvasClick}
         style={{
           ...viewModeStyles,
           backgroundColor: 'white',
@@ -181,24 +208,17 @@ export function Canvas() {
             }}
           >
             <div style={{ fontSize: '40px' }}>+</div>
-            <p style={{ margin: 0, fontSize: '16px', fontWeight: 500 }}>Canvas ist leer</p>
+            <p style={{ margin: 0, fontSize: '16px', fontWeight: 500 }}>{t('editor.canvas.empty')}</p>
             <p style={{ margin: 0, fontSize: '13px', maxWidth: '300px' }}>
-              Ziehe Komponenten aus der Palette hierher oder klicke auf "Hinzufügen"
+              {t('editor.canvas.emptyHint')}
             </p>
           </div>
         ) : (
           rootIds.map(id => renderNode(id))
         )}
 
-        {dropIndicator && (
-          <div style={{
-            height: '3px',
-            backgroundColor: '#3b82f6',
-            margin: '4px 0',
-            borderRadius: '2px',
-          }} />
-        )}
+        <AlignmentGuides containerRef={canvasRef} />
       </div>
-    </div>
+    </DroppableCanvasInner>
   )
 }

@@ -3,9 +3,9 @@
   <img src="public/vite.svg" width="64" height="64" alt="UIForge Logo">
   <h1 align="center">⚒️ UIForge</h1>
   <p align="center">
-    <strong>Visual UI Builder — Drag, Drop, Export.</strong>
+    <strong>Visual UI Builder — gemacht mit ❤️ von einem Solo-Dev für alle</strong>
     <br>
-    Designe Interfaces visuell im Browser und exportiere sauberen React/HTML-Code.
+    Baue Interfaces visuell im Browser und exportiere sauberen Code.
   </p>
   <br>
   <p>
@@ -14,9 +14,18 @@
     <img src="https://img.shields.io/badge/license-MIT-22c55e?style=for-the-badge&labelColor=1e293b" alt="MIT License">
     <img src="https://img.shields.io/badge/react-18-3b82f6?style=for-the-badge&labelColor=1e293b&logo=react" alt="React 18">
     <img src="https://img.shields.io/badge/typescript-5.5-3178c6?style=for-the-badge&labelColor=1e293b&logo=typescript" alt="TypeScript 5.5">
+    <img src="https://img.shields.io/badge/made_with-❤️-ef4444?style=flat-square" alt="Made with love">
   </p>
   <br>
 </div>
+
+---
+
+Hallo du! Schön, dass du hier bist. 👋
+
+**UIForge** ist ein visueller UI-Builder — ein Projekt, das ich ganz allein in unzähligen Abendstunden und Wochenenden zusammengebaut habe. Es hilft dir, Interfaces per Drag & Drop zu designen und als sauberen React/HTML-Code zu exportieren. Kein Team, kein grosses Budget, nur ich, mein Editor und eine Menge Kaffee ☕
+
+Wenn du Fehler findest, Dinge vermisst oder einfach nur Hallo sagen willst — freue ich mich über jede Nachricht!
 
 ---
 
@@ -53,7 +62,7 @@
       <br>
       <b>Export</b>
     </td>
-    <td>Exportiere als React JSX, React TypeScript oder reines HTML+CSS.</td>
+    <td>Exportiere als React, Vue, Svelte oder reines HTML+CSS.</td>
   </tr>
   <tr>
     <td align="center">
@@ -81,11 +90,27 @@
     <td>Projekte werden automatisch im Browser gespeichert.</td>
     <td align="center">
       <br>
+      <h3>🌍</h3>
+      <br>
+      <b>Mehrsprachig</b>
+    </td>
+    <td>UI in Deutsch und Englisch — einfach umschaltbar.</td>
+  </tr>
+  <tr>
+    <td align="center">
+      <br>
+      <h3>📐</h3>
+      <br>
+      <b>Alignment Guides</b>
+    </td>
+    <td>Intelligente Hilfslinien beim Positionieren von Komponenten.</td>
+    <td align="center">
+      <br>
       <h3>🔌</h3>
       <br>
-      <b>REST API</b>
+      <b>Plugins</b>
     </td>
-    <td>Vollständige Backend-API mit JWT-Authentifizierung.</td>
+    <td>Erweiterbar durch ein einfaches Plugin-System.</td>
   </tr>
 </table>
 
@@ -102,8 +127,8 @@
 │  React 18    │  Express.js      │  Vite 5               │
 │  TypeScript  │  JWT Auth        │  TypeScript 5.5       │
 │  Zustand     │  bcryptjs        │  Tailwind CSS 3       │
-│  dnd-kit     │  JSON Storage    │  PostCSS / Autoprefixer│
-│  Monaco      │  UUID            │                       │
+│  dnd-kit     │  SQLite / JSON   │  PostCSS / Autoprefixer│
+│  i18next     │  UUID            │                       │
 │  Lucide Icons│  CORS / Multer   │                       │
 │  Tailwind CSS│                  │                       │
 └──────────────┴──────────────────┴───────────────────────┘
@@ -196,11 +221,12 @@ uiforge/
 │   │   ├── registry.ts      # Komponenten-Definitionen (20+ Typen)
 │   │   └── BuiltInRenderer.tsx # Render-Logik für alle Komponenten
 │   ├── editor/
-│   │   ├── Canvas.tsx       # Drag & Drop Leinwand
+│   │   ├── Canvas.tsx       # Drag & Drop Leinwand (dnd-kit)
 │   │   ├── Toolbar.tsx      # Werkzeugleiste (Undo, Zoom, Export)
 │   │   ├── ComponentPalette.tsx # Komponenten-Auswahl
 │   │   ├── PropertiesPanel.tsx   # Eigenschaften-Editor
-│   │   └── ExportDialog.tsx # Code-Export Dialog
+│   │   ├── ExportDialog.tsx # Code-Export Dialog
+│   │   └── ResizeHandle.tsx # Resize-Griffe für Komponenten
 │   ├── pages/
 │   │   ├── Dashboard.tsx    # Projektübersicht
 │   │   ├── EditorPage.tsx   # Haupt-Editor (Split-View)
@@ -208,14 +234,24 @@ uiforge/
 │   ├── store/
 │   │   ├── editorStore.ts   # Editor-State (Nodes, History, Selection)
 │   │   ├── projectStore.ts  # Projekt-State (Projects, Pages)
-│   │   └── uiStore.ts       # UI-State (Panels, Theme, Toasts)
+│   │   ├── uiStore.ts       # UI-State (Panels, Theme, Toasts)
+│   │   └── i18nStore.ts     # Sprach-Einstellungen
 │   ├── types/
 │   │   ├── component.ts     # ComponentInstance, PropDefinition
 │   │   ├── page.ts          # Page Interface
-│   │   └── project.ts       # Project, ProjectSettings
+│   │   ├── project.ts       # Project, ProjectSettings
+│   │   └── plugin.ts        # Plugin-Typen
 │   ├── export/
 │   │   ├── index.ts         # Export-Hub
-│   │   └── reactExport.ts   # React/HTML Code-Generatoren
+│   │   ├── reactExport.ts   # React/HTML Code-Generatoren
+│   │   ├── vueExport.ts     # Vue Code-Generator
+│   │   └── svelteExport.ts  # Svelte Code-Generator
+│   ├── i18n/
+│   │   ├── index.ts         # i18n-Initialisierung
+│   │   ├── de.json          # Deutsche Übersetzungen
+│   │   └── en.json          # Englische Übersetzungen
+│   ├── plugins/
+│   │   └── index.ts         # Plugin-System
 │   ├── lib/
 │   │   ├── cn.ts            # Tailwind class merge utility
 │   │   └── storage.ts       # localStorage Persistenz
@@ -234,6 +270,80 @@ uiforge/
 ├── postcss.config.js        # PostCSS-Konfiguration
 └── package.json             # Projekt-Metadaten & Scripts
 ```
+
+---
+
+## 🧩 Komponenten
+
+| Komponente | Kategorie | Kinder? | Beschreibung |
+|-----------|-----------|---------|-------------|
+| Container | Layout | ✅ | Flex-Container mit Direction, Justify, Align |
+| Section | Layout | ✅ | Abschnitt mit Hintergrund & Padding |
+| Grid | Layout | ✅ | CSS-Grid mit einstellbaren Spalten |
+| Column | Layout | ✅ | Grid-Spalte mit Span |
+| Header | Layout | ✅ | Kopfzeile |
+| Footer | Layout | ✅ | Fußzeile mit Hintergrund |
+| Heading | Basic | ❌ | Überschrift (H1-H4) |
+| Text | Basic | ❌ | Textabsatz |
+| Button | Basic | ❌ | Button mit Varianten & Größen |
+| Image | Media | ❌ | Bild mit Object-Fit |
+| Video | Media | ❌ | YouTube/Vimeo/Direct Embed |
+| Input | Form | ❌ | Eingabefeld mit Label |
+| Textarea | Form | ❌ | Mehrzeiliges Textfeld |
+| Form | Form | ✅ | Formular mit Submit-Button |
+| Card | Content | ✅ | Karte mit Shadow & Padding |
+| Divider | Basic | ❌ | Horizontale Trennlinie |
+| Spacer | Layout | ❌ | Leerraum |
+| Link | Basic | ❌ | Hyperlink |
+| NavBar | Navigation | ✅ | Navigationsleiste mit Brand |
+| RawHTML | Custom | ❌ | Benutzerdefinierter HTML-Code |
+
+---
+
+## 🧭 Roadmap — was noch kommt
+
+*Weil ich das allein mache, geht es vielleicht etwas langsamer — aber dafür mit ganz viel Liebe zum Detail.* 🌱
+
+- [x] Lokale Persistenz (localStorage)
+- [x] Undo/Redo History
+- [x] **Drag & Drop Positionierung** (`@dnd-kit`)
+- [x] **Komponenten-Resizing & Alignment-Guides**
+- [x] **Weitere Export-Ziele** (Vue, Svelte)
+- [x] **Eigene Komponenten erstellen**
+- [x] **Datenbank-Storage** (SQLite / IndexedDB)
+- [x] **Plugin-System**
+- [x] **i18n / Mehrsprachigkeit**
+
+### 🌟 Solo-Dev-Specials (weil ich ja allein bin)
+
+- **📝 Notizen & Kommentare** — Mach dir Notizen zu deinen Projekten, wie ich sie mir auch mache
+- **🎯 Fokus-Modus** — Kein Team-Gedöns, nur du und dein Projekt
+- **💪 Persönlicher Workspace** — Alles offline-first, alles gehört dir
+- **☕ Dev-Tagebuch** — Tracke deinen Fortschritt, wie ich meinen tracke
+
+---
+
+## 🔧 Bugfixes & Changelog
+
+### Version 2.0.0
+
+- **🔨 Undo/Redo gefixt** — Die History-Engine speichert jetzt korrekt Zwischenzustände; Undo und Redo funktionieren zuverlässig über beliebig viele Schritte
+- **🧭 Dashboard-Navigation** — Vom Editor zurück zur Projektübersicht (neuer Zurück-Button in der Toolbar)
+- **💾 Lokale Persistenz** — Projekte und Editor-Zustand werden automatisch im Browser gespeichert und beim Neuladen wiederhergestellt
+- **🖼️ Favicon** — Eigenes UIForge-Logo als SVG-Favicon
+- **🧹 Code bereinigt** — Unbenutzte Imports entfernt, TypeScript strikter
+- **🎨 README** — Liebevoll überarbeitet mit persönlicher Note
+
+### Neu in 2.1.0
+
+- **🖱️ dnd-kit Drag & Drop** — Präzises Positionieren mit Drop-Indikatoren
+- **📐 Resizing & Alignment Guides** — Größe ändern und intelligent ausrichten
+- **🔄 Vue & Svelte Export** — Zwei weitere Exportformate
+- **🧩 Eigene Komponenten** — Speichere und verwende deine eigenen Komponenten
+- **🔌 Plugin-System** — Erweitere UIForge mit Plugins
+- **🌍 i18n** — UI in Deutsch und Englisch
+- **💾 IndexedDB Storage** — Robusteres Speichern im Browser
+- **☕ Solo-Dev-Modus** — Features, die das Alleine-Entwickeln schöner machen
 
 ---
 
@@ -273,58 +383,15 @@ Alle API-Routen sind mit `/api` prefixiert. Authentifizierte Endpoints benötige
 
 ---
 
-## 🧩 Komponenten
+## 🙋‍♂️ Eine kleine Bitte
 
-| Komponente | Kategorie | Kinder? | Beschreibung |
-|-----------|-----------|---------|-------------|
-| Container | Layout | ✅ | Flex-Container mit Direction, Justify, Align |
-| Section | Layout | ✅ | Abschnitt mit Hintergrund & Padding |
-| Grid | Layout | ✅ | CSS-Grid mit einstellbaren Spalten |
-| Column | Layout | ✅ | Grid-Spalte mit Span |
-| Header | Layout | ✅ | Kopfzeile |
-| Footer | Layout | ✅ | Fußzeile mit Hintergrund |
-| Heading | Basic | ❌ | Überschrift (H1-H4) |
-| Text | Basic | ❌ | Textabsatz |
-| Button | Basic | ❌ | Button mit Varianten & Größen |
-| Image | Media | ❌ | Bild mit Object-Fit |
-| Video | Media | ❌ | YouTube/Vimeo/Direct Embed |
-| Input | Form | ❌ | Eingabefeld mit Label |
-| Textarea | Form | ❌ | Mehrzeiliges Textfeld |
-| Form | Form | ✅ | Formular mit Submit-Button |
-| Card | Content | ✅ | Karte mit Shadow & Padding |
-| Divider | Basic | ❌ | Horizontale Trennlinie |
-| Spacer | Layout | ❌ | Leerraum |
-| Link | Basic | ❌ | Hyperlink |
-| NavBar | Navigation | ✅ | Navigationsleiste mit Brand |
-| RawHTML | Custom | ❌ | Benutzerdefinierter HTML-Code |
+Dieses Projekt habe ich ganz allein gebaut — in Feierabenden, an Wochenenden, zwischen Kaffee und Mitternachtssnacks. Wenn dir UIForge gefällt, freue ich mich riesig über:
 
----
+- **Einen ⭐ auf GitHub** — das motiviert ungemein!
+- **Feedback & Ideen** — was fehlt, was könnte besser sein?
+- **Weitersagen** — wenn es jemandem helfen könnte
 
-## 🔧 Bugfixes & Changelog
-
-### Version 2.0.0
-
-- **🔨 Undo/Redo gefixt** — Die History-Engine speichert jetzt korrekt Zwischenzustände; Undo und Redo funktionieren zuverlässig über beliebig viele Schritte
-- **🧭 Dashboard-Navigation** — Vom Editor zurück zur Projektübersicht (neuer Zurück-Button in der Toolbar)
-- **💾 Lokale Persistenz** — Projekte und Editor-Zustand werden automatisch im Browser gespeichert und beim Neuladen wiederhergestellt
-- **🖼️ Favicon** — Eigenes UIForge-Logo als SVG-Favicon
-- **🧹 Code bereinigt** — Unbenutzte Imports entfernt, TypeScript strikter
-- **🎨 README** — Vollständig überarbeitet mit detaillierter Dokumentation
-
----
-
-## 🧭 Roadmap
-
-- [x] Lokale Persistenz (localStorage)
-- [x] Undo/Redo History
-- [ ] Drag & Drop Positionierung (`@dnd-kit`)
-- [ ] Komponenten-Resizing & Alignment-Guides
-- [ ] Weitere Export-Ziele (Vue, Svelte)
-- [ ] Eigene Komponenten erstellen
-- [ ] Team-Zusammenarbeit
-- [ ] Datenbank-Storage (SQLite / PostgreSQL)
-- [ ] Plugin-System
-- [ ] i18n / Mehrsprachigkeit
+Und wenn du auch Solo-Dev bist: **Bleib dran!** Jedes große Projekt fängt klein an. 🌱
 
 ---
 
@@ -337,7 +404,7 @@ Dieses Projekt steht unter der **MIT License** — frei verwendbar, modifizierba
 <div align="center">
   <br>
   <sub>
-    Built with TypeScript, React & ❤️
+    Gebaut mit TypeScript, React, ganz viel ❤️ und zu wenig Schlaf
     <br>
     <a href="http://178.104.142.87:3004">Live Demo</a> ·
     <a href="https://github.com/dein-username/uiforge/issues">Bug melden</a> ·

@@ -3,22 +3,24 @@ import { create } from 'zustand'
 interface UIState {
   sidebarOpen: boolean
   rightPanelOpen: boolean
-  activeTab: 'palette' | 'pages' | 'media'
+  activeTab: 'palette' | 'pages' | 'media' | 'custom' | 'plugins'
   rightTab: 'properties' | 'styles' | 'code'
   theme: 'light' | 'dark'
   exportDialogOpen: boolean
   settingsDialogOpen: boolean
   toasts: { id: string; message: string; type: 'success' | 'error' | 'info' }[]
+  customComponentVersion: number
 
   toggleSidebar: () => void
   toggleRightPanel: () => void
-  setActiveTab: (tab: 'palette' | 'pages' | 'media') => void
+  setActiveTab: (tab: 'palette' | 'pages' | 'media' | 'custom' | 'plugins') => void
   setRightTab: (tab: 'properties' | 'styles' | 'code') => void
   toggleTheme: () => void
   setExportDialog: (open: boolean) => void
   setSettingsDialog: (open: boolean) => void
   addToast: (message: string, type?: 'success' | 'error' | 'info') => void
   removeToast: (id: string) => void
+  bumpCustomComponentVersion: () => void
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -30,6 +32,7 @@ export const useUIStore = create<UIState>((set) => ({
   exportDialogOpen: false,
   settingsDialogOpen: false,
   toasts: [],
+  customComponentVersion: 0,
 
   toggleSidebar: () => set(s => ({ sidebarOpen: !s.sidebarOpen })),
   toggleRightPanel: () => set(s => ({ rightPanelOpen: !s.rightPanelOpen })),
@@ -48,4 +51,5 @@ export const useUIStore = create<UIState>((set) => ({
   },
 
   removeToast: (id) => set(s => ({ toasts: s.toasts.filter(t => t.id !== id) })),
+  bumpCustomComponentVersion: () => set(s => ({ customComponentVersion: s.customComponentVersion + 1 })),
 }))

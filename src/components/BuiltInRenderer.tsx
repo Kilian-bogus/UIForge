@@ -314,6 +314,9 @@ export function renderBuiltInComponent(node: ComponentInstance, children?: React
       return <div dangerouslySetInnerHTML={{ __html: p.html }} style={s} />
 
     default:
+      if (node.type.startsWith('Custom_')) {
+        return <div dangerouslySetInnerHTML={{ __html: p.html }} style={s} />
+      }
       return <div style={{ padding: '16px', border: '1px dashed #ccc', color: '#999', ...s }}>{node.type}</div>
   }
 }

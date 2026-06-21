@@ -412,4 +412,21 @@ export function getCategories(): { key: string; label: string }[] {
   ]
 }
 
+export function registerCustomComponent(name: string, html: string, icon: string = 'Code'): ComponentDefinition {
+  const type = `Custom_${name.replace(/\s+/g, '_')}` as any
+  const def: ComponentDefinition = {
+    type,
+    label: name,
+    icon,
+    category: 'custom',
+    canHaveChildren: false,
+    props: [
+      { name: 'html', label: 'HTML', type: 'text', defaultValue: html, group: 'Content' },
+    ],
+    defaultProps: { html },
+  }
+  componentDefinitions[type] = def
+  return def
+}
+
 export { componentDefinitions }

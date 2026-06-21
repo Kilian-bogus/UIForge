@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useProjectStore } from '@/store/projectStore'
 import { useEditorStore } from '@/store/editorStore'
 import { loadFromDisk } from '@/lib/storage'
+import { useTranslation } from '@/store/i18nStore'
 import * as Icons from 'lucide-react'
 
 interface DashboardProps {
@@ -11,6 +12,7 @@ interface DashboardProps {
 export function Dashboard({ onNavigate }: DashboardProps) {
   const { projects, createProject, setCurrentProject, pages } = useProjectStore()
   const { loadProject } = useEditorStore()
+  const { t } = useTranslation()
   const [showCreate, setShowCreate] = useState(false)
   const [name, setName] = useState('')
 
@@ -26,7 +28,6 @@ export function Dashboard({ onNavigate }: DashboardProps) {
     const id = createProject(name.trim())
     setShowCreate(false)
     setName('')
-    // Initialize with a default root container
     const rootId = useEditorStore.getState().addComponent('Container', null)
     onNavigate('editor')
   }
@@ -53,13 +54,13 @@ export function Dashboard({ onNavigate }: DashboardProps) {
           <h1 style={{ fontSize: '20px', fontWeight: 700, margin: 0 }}>UIForge</h1>
         </div>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <span style={{ fontSize: '13px', color: '#6b7280' }}>Visual UI Builder</span>
+          <span style={{ fontSize: '13px', color: '#6b7280' }}>{t('app.tagline')}</span>
         </div>
       </div>
 
       <div style={{ maxWidth: '900px', margin: '0 auto', padding: '32px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-          <h2 style={{ fontSize: '24px', fontWeight: 600, margin: 0 }}>Projekte</h2>
+          <h2 style={{ fontSize: '24px', fontWeight: 600, margin: 0 }}>{t('dashboard.title')}</h2>
           <button
             onClick={() => setShowCreate(true)}
             style={{
@@ -77,7 +78,7 @@ export function Dashboard({ onNavigate }: DashboardProps) {
             }}
           >
             <Icons.Plus size={18} />
-            Neues Projekt
+            {t('dashboard.create')}
           </button>
         </div>
 
@@ -89,11 +90,11 @@ export function Dashboard({ onNavigate }: DashboardProps) {
             padding: '20px',
             marginBottom: '24px',
           }}>
-            <h3 style={{ margin: '0 0 12px', fontSize: '16px', fontWeight: 600 }}>Neues Projekt erstellen</h3>
+            <h3 style={{ margin: '0 0 12px', fontSize: '16px', fontWeight: 600 }}>{t('dashboard.createTitle')}</h3>
             <div style={{ display: 'flex', gap: '8px' }}>
               <input
                 type="text"
-                placeholder="Projektname..."
+                placeholder={t('dashboard.placeholder')}
                 value={name}
                 onChange={e => setName(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleCreate()}
@@ -116,7 +117,7 @@ export function Dashboard({ onNavigate }: DashboardProps) {
                 fontWeight: 600,
                 cursor: 'pointer',
               }}>
-                Erstellen
+                {t('dashboard.createBtn')}
               </button>
               <button onClick={() => setShowCreate(false)} style={{
                 padding: '10px 20px',
@@ -125,7 +126,7 @@ export function Dashboard({ onNavigate }: DashboardProps) {
                 backgroundColor: 'white',
                 cursor: 'pointer',
               }}>
-                Abbrechen
+                {t('dashboard.cancel')}
               </button>
             </div>
           </div>
@@ -143,10 +144,9 @@ export function Dashboard({ onNavigate }: DashboardProps) {
             textAlign: 'center',
           }}>
             <Icons.Box size={48} color="#d1d5db" />
-            <h3 style={{ margin: '16px 0 8px', color: '#6b7280' }}>Noch keine Projekte</h3>
+            <h3 style={{ margin: '16px 0 8px', color: '#6b7280' }}>{t('dashboard.empty.title')}</h3>
             <p style={{ color: '#9ca3af', fontSize: '14px', maxWidth: '400px' }}>
-              Erstelle dein erstes Projekt und beginne mit dem visuellen UI-Builder.
-              Ziehe Komponenten per Drag & Drop auf die Leinwand und exportiere den Code.
+              {t('dashboard.empty.desc')}
             </p>
           </div>
         ) : (
@@ -174,7 +174,7 @@ export function Dashboard({ onNavigate }: DashboardProps) {
                   <p style={{ margin: '0 0 8px', fontSize: '13px', color: '#6b7280' }}>{project.description}</p>
                 )}
                 <div style={{ display: 'flex', gap: '12px', fontSize: '12px', color: '#9ca3af' }}>
-                  <span>{project.pages?.length || 0} Seite{(project.pages?.length || 0) !== 1 ? 'n' : ''}</span>
+                  <span>{(project.pages?.length || 0)} {t('dashboard.projectPages')}</span>
                   <span>{project.settings?.framework || 'react'}</span>
                   <span>{new Date(project.updatedAt).toLocaleDateString()}</span>
                 </div>
@@ -184,7 +184,7 @@ export function Dashboard({ onNavigate }: DashboardProps) {
         )}
 
         <div style={{ marginTop: '48px' }}>
-          <h3 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '16px' }}>Features</h3>
+          <h3 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '16px' }}>{t('dashboard.features')}</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '12px' }}>
             {features.map(f => {
               const Icon = (Icons as any)[f.icon] || Icons.Box
@@ -208,7 +208,7 @@ export function Dashboard({ onNavigate }: DashboardProps) {
 const features = [
   { title: 'Drag & Drop Editor', desc: 'Ziehe Komponenten per Drag & Drop auf die Leinwand', icon: 'Move' },
   { title: 'Live Vorschau', desc: 'Siehe Änderungen in Echtzeit auf Desktop, Tablet & Mobile', icon: 'Monitor' },
-  { title: 'Code Export', desc: 'Exportiere als React-Komponente oder HTML+CSS', icon: 'FileDown' },
+  { title: 'Code Export', desc: 'Exportiere als React, Vue, Svelte oder HTML+CSS', icon: 'FileDown' },
   { title: 'Eigenschaften-Panel', desc: 'Bearbeite alle Props und Styles visuell', icon: 'SlidersHorizontal' },
   { title: 'Versionierung', desc: 'Undo/Redo für jede Änderung', icon: 'History' },
   { title: 'Responsive Design', desc: 'Optimiere für alle Bildschirmgrößen', icon: 'Smartphone' },
