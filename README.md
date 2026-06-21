@@ -14,7 +14,6 @@
     <img src="https://img.shields.io/badge/license-MIT-22c55e?style=for-the-badge&labelColor=1e293b" alt="MIT License">
     <img src="https://img.shields.io/badge/react-18-3b82f6?style=for-the-badge&labelColor=1e293b&logo=react" alt="React 18">
     <img src="https://img.shields.io/badge/typescript-5.5-3178c6?style=for-the-badge&labelColor=1e293b&logo=typescript" alt="TypeScript 5.5">
-    <img src="https://img.shields.io/badge/made_with-❤️-ef4444?style=flat-square" alt="Made with love">
   </p>
   <br>
 </div>
